@@ -16,11 +16,8 @@ repositories {
 }
 
 dependencies {
-    // Use JUnit Jupiter for testing.
-    testImplementation(libs.junit.jupiter)
 
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-
+    implementation(project(":api"))
     // This dependency is used by the application.
     implementation(libs.guava)
 }
@@ -34,10 +31,11 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass = "cs.unicam.it.App"
+    mainClass = "cs.unicam.it.TerminalApp"
 }
 
 tasks.named<Test>("test") {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
 }
+
