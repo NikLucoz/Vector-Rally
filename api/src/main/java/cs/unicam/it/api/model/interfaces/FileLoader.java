@@ -9,19 +9,29 @@
  *
  */
 
-package cs.unicam.it.api.model;
+package cs.unicam.it.api.model.interfaces;
 
-import cs.unicam.it.api.model.interfaces.MoveInterface;
+import cs.unicam.it.api.view.Color;
+import cs.unicam.it.api.view.interfaces.TextUtils;
 
-import static java.lang.Math.sqrt;
+import java.net.URL;
 
-public class Move implements MoveInterface {
+public interface FileLoader {
 
-    @Override
-    public Vector calculateAcceleration(Vector vector) {
-        return new Vector(
-                (int) (vector.x() + sqrt(vector.x())),
-                (int) (vector.y() + sqrt(vector.y()))
-        );
+    default String getFilePath(String fileName) {
+        ClassLoader classLoader = FileLoader.class.getClassLoader();
+        String path = "";
+        // Load the resource as a URL
+        URL resource = classLoader.getResource(fileName);
+
+        if (resource != null) {
+            // Convert the URL to a file path
+            path = resource.getPath();
+            TextUtils.printCustomlnText("File loaded from path: " + path);
+        } else {
+            TextUtils.printCustomlnText("File not found!", Color.RED_BOLD);
+        }
+
+        return path;
     }
 }

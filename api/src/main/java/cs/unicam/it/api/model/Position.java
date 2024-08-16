@@ -27,4 +27,8 @@ public final class Position {
     public int getY() {
         return y;
     }
+
+    public Vector getVector() {
+        return new Vector(x, y);
+    }
 }

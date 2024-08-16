@@ -14,6 +14,4 @@ package cs.unicam.it.api.model.interfaces;
 public interface VelocityVector {
     int x();
     int y();
-    int getRandomX();
-    int getRandomY();
 }

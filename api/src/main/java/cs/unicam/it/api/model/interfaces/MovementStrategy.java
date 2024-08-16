@@ -9,21 +9,19 @@
  *
  */
 
-package cs.unicam.it.api.model;
+package cs.unicam.it.api.model.interfaces;
 
-import cs.unicam.it.api.model.Movement.MediumMovementStrategy;
-import cs.unicam.it.api.model.interfaces.MovementStrategy;
-import cs.unicam.it.api.model.Movement.SimpleMovementStrategy;
-import cs.unicam.it.api.model.interfaces.Track;
+import cs.unicam.it.api.model.Vector;
 
-public class BotCar extends Car {
+import static java.lang.Math.sqrt;
 
-    public BotCar(int id, Position position, char symbol) {
-        super(id, position, symbol);
-    }
+public interface MovementStrategy {
+    void nextMove(Agent agent, Track track);
 
-    public void nextMove(Track track) {
-        MovementStrategy ms = new SimpleMovementStrategy();
-        ms.nextMove(this, track);
+    default Vector calculateAcceleration(Vector vector) {
+        return new Vector(
+                (int) (vector.x() + sqrt(vector.x())),
+                (int) (vector.y() + sqrt(vector.y()))
+        );
     }
 }

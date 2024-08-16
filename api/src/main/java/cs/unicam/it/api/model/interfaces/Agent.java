@@ -16,8 +16,9 @@ import cs.unicam.it.api.model.Position;
 public interface Agent {
     int getId();
     Position getPosition();
+    void setPosition(Position position);
     char getSymbol();
-    void nextMove();
+    void nextMove(Track track);
     boolean isInRace();
     void setIsInRace(boolean inRace);
 }

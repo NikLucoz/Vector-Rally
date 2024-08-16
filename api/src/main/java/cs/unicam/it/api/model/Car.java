@@ -12,6 +12,7 @@
 package cs.unicam.it.api.model;
 
 import cs.unicam.it.api.model.interfaces.Agent;
+import cs.unicam.it.api.model.interfaces.Track;
 
 public class Car implements Agent {
     protected int id;
@@ -37,14 +38,17 @@ public class Car implements Agent {
     }
 
     @Override
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    @Override
     public char getSymbol() {
         return symbol;
     }
 
     @Override
-    public void nextMove() {
-
-    }
+    public void nextMove(Track track) {}
 
     @Override
     public boolean isInRace() {

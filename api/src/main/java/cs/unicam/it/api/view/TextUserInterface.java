@@ -42,10 +42,32 @@ public class TextUserInterface implements UserInterface {
 
     @Override
     public void showMenu() {
-        TextUtils.printCustomlnText("Prova");
+        TextUtils.printCustomlnText("-----MENU-----");
     }
 
     public void update(Agent[] agents, Track track) {
-        //TODO: implement later
+        TextUtils.clearScreen();
+        for (int i = 0; i < track.getHeight(); i++) {
+            for (int j = 0; j < track.getWidth(); j++) {
+                boolean isAgentAtPos = false;
+
+                // Controlla se c'è un agente in questa posizione
+                for (Agent agent : agents) {
+                    if (!agent.isInRace()) continue;
+                    if (agent.getPosition().getX() == i && agent.getPosition().getY() == j) {
+                        // Stampa il simbolo dell'agente
+                        TextUtils.printCustomText(String.valueOf(agent.getSymbol()));
+                        isAgentAtPos = true;
+                        break; // Esce dal ciclo degli agenti
+                    }
+                }
+
+                if (!isAgentAtPos) {
+                    TextUtils.printCustomText(String.valueOf(track.getTrackTileAt(i, j).getSymbol()));
+                }
+            }
+
+            TextUtils.printCustomlnText(""); // New line
+        }
     }
 }

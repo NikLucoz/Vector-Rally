@@ -14,6 +14,8 @@ package cs.unicam.it.api.model;
 import cs.unicam.it.api.model.interfaces.Agent;
 import cs.unicam.it.api.model.interfaces.Track;
 
+import java.util.ArrayList;
+
 public class RaceTrack implements Track {
     private final TrackTile[][] track;
     private final int width;
@@ -32,7 +34,7 @@ public class RaceTrack implements Track {
 
     @Override
     public TrackTile getTrackTileAt(int x, int y) {
-        return null;
+        return track[x][y];
     }
 
     @Override
@@ -47,13 +49,58 @@ public class RaceTrack implements Track {
 
     @Override
     public boolean isAgentOutOfTrack(Agent agent) {
+        if (agent == null) throw new IllegalArgumentException("Agent is null");
+
         Position agentPos = agent.getPosition();
+        if (agentPos.getY() < 0 || agentPos.getY() >= width) return true;
+        if (agentPos.getX() < 0 || agentPos.getX() >= height) return true;
+
         return track[agentPos.getX()][agentPos.getY()] == TrackTile.WALL;
     }
 
+    public boolean isAgentOnFinishLine(Agent agent) {
+        if (agent == null) throw new IllegalArgumentException("Agent is null");
+
+        Position agentPos = agent.getPosition();
+        ArrayList<Position> startingTiles = getFinishLine();
+        if (startingTiles.isEmpty()) return false;
+
+        return startingTiles.contains(agentPos);
+    }
+
     @Override
-    public void addAgent(Agent agent) {
-        // TODO implement later, this method has to put the agent on the track start line
+    public void addAgents(Agent[] agents) {
+        if (agents == null || agents.length == 0) throw new IllegalArgumentException("No agents passed");
+
+        ArrayList<Position> startingTiles = getStartingLine();
+        if (startingTiles.isEmpty()) return;
+        if (startingTiles.size() < agents.length) throw new IllegalArgumentException("Invalid number of agents, too much for the starting line");
+
+        for (int i = 0; i < agents.length; i++) {
+            agents[i].setPosition(startingTiles.get(i));
+        }
+    }
+
+    private ArrayList<Position> getAllTilesOfTrack(TrackTile trackTile) {
+        ArrayList<Position> tiles = new ArrayList<>();
+
+        for (int x = 0; x < height; x++) {
+            for (int y = 0; y < width; y++) {
+                if (track[x][y] == trackTile) {
+                    tiles.add(new Position(x, y));
+                }
+            }
+        }
+
+        return tiles;
+    }
+
+    public ArrayList<Position> getStartingLine() {
+        return getAllTilesOfTrack(TrackTile.START);
+    }
+
+    public ArrayList<Position> getFinishLine() {
+        return getAllTilesOfTrack(TrackTile.FINISH);
     }
 
 }

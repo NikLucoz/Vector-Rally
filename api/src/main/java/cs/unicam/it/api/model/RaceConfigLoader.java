@@ -11,19 +11,28 @@
 
 package cs.unicam.it.api.model;
 
-import cs.unicam.it.api.model.Movement.MediumMovementStrategy;
-import cs.unicam.it.api.model.interfaces.MovementStrategy;
-import cs.unicam.it.api.model.Movement.SimpleMovementStrategy;
-import cs.unicam.it.api.model.interfaces.Track;
+import cs.unicam.it.api.model.interfaces.FileLoader;
+import cs.unicam.it.api.view.Color;
+import cs.unicam.it.api.view.interfaces.TextUtils;
 
-public class BotCar extends Car {
+import java.net.URL;
 
-    public BotCar(int id, Position position, char symbol) {
-        super(id, position, symbol);
-    }
+public class RaceConfigLoader implements FileLoader {
 
-    public void nextMove(Track track) {
-        MovementStrategy ms = new SimpleMovementStrategy();
-        ms.nextMove(this, track);
+    public String getRaceConfigFilePath() {
+        ClassLoader classLoader = FileLoader.class.getClassLoader();
+        String path = "";
+        // Load the resource as a URL
+        URL resource = classLoader.getResource("raceConfig.txt");
+
+        if (resource != null) {
+            // Convert the URL to a file path
+            path = resource.getPath();
+            TextUtils.printCustomlnText("File loaded from path: " + path);
+        } else {
+            TextUtils.printCustomlnText("File not found!", Color.RED_BOLD);
+        }
+
+        return path;
     }
 }

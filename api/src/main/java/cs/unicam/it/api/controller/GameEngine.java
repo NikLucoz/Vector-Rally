@@ -13,6 +13,8 @@ package cs.unicam.it.api.controller;
 
 import cs.unicam.it.api.model.interfaces.Agent;
 import cs.unicam.it.api.model.interfaces.Track;
+import cs.unicam.it.api.view.Color;
+import cs.unicam.it.api.view.interfaces.TextUtils;
 import cs.unicam.it.api.view.interfaces.UserInterface;
 
 public class GameEngine {
@@ -20,6 +22,7 @@ public class GameEngine {
     private final Agent[] agents;
     private final UserInterface UI;
     private boolean playing = true;
+    private final int simulationTime = 3000;
 
     public GameEngine(Track track, Agent[] agents, UserInterface ui) {
         this.track = track;
@@ -29,36 +32,69 @@ public class GameEngine {
     }
 
     private void setPlayersOnTrack() {
-        // TODO implement later, this method has to put all agents on the track start line
-        for (Agent agent : agents) {
-            track.addAgent(agent);
+        track.addAgents(agents);
+    }
+
+    public void run() throws InterruptedException {
+        this.gameLoop();
+    }
+
+    private void gameLoop() throws InterruptedException {
+        UI.update(agents, track);
+        Thread.sleep(simulationTime);
+
+        while(playing) {
+            updateActors();
+            UI.update(agents, track);
+            checkForWinner();
+            Thread.sleep(simulationTime);
         }
     }
 
-    public void run() {
-        gameLoop();
-    }
+    private void updateActors() {
+        for (Agent agent : agents) {
+            if (agent.isInRace()) {
+                agent.nextMove(track); // ask each player for a move
 
-    public void gameLoop() {
-        while(playing) {
-            // ask each player for a move
-            // check if the move is valid
-            // move players
-            // check for crash
-            for (Agent agent : agents) {
-                if(agent.isInRace()) {
-                    agent.nextMove();
+                // Check if agent is out of track and disqualify it if true
+                if (track.isAgentOutOfTrack(agent)) {
+                    agent.setIsInRace(false);
+                    TextUtils.printCustomText(agent.getSymbol() + " disqualified!");
                 }
             }
+        }
+    }
 
-            // print track
-            UI.update(agents, track);
+    private boolean checkForWinner() {
+        // Check for winners, if true set playing to false
+        // update playing value
+        if (checkIfAllDisqualified()) return false;
 
-            // Check for winners, if true set playing to false
-            // update playing value
+        for (Agent agent : agents) {
+            if (!agent.isInRace()) continue;
+            if (track.isAgentOnFinishLine(agent)) {
+                playing = false;
+                return true;
+            }
         }
 
-        // show winners
-        // UI.showWinner();
+        return false;
+    }
+
+    private boolean checkIfAllDisqualified() {
+        int agentsNumber = agents.length;
+        for (Agent agent : agents) {
+            if(!agent.isInRace()) {
+                agentsNumber--;
+            }
+        }
+
+        if(agentsNumber == 0) {
+            TextUtils.printCustomText("All cars are disqualified!", Color.RED_UNDERLINED);
+            playing = false;
+            return true;
+        }
+
+        return false;
     }
 }

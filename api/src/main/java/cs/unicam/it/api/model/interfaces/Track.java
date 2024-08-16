@@ -11,13 +11,19 @@
 
 package cs.unicam.it.api.model.interfaces;
 
+import cs.unicam.it.api.model.Position;
 import cs.unicam.it.api.model.TrackTile;
 
+import java.util.ArrayList;
+
 public interface Track {
-    public TrackTile[][] getTrack();
-    public boolean isAgentOutOfTrack(Agent agent);
-    public TrackTile getTrackTileAt(int x, int y);
-    public int getWidth();
-    public int getHeight();
-    public void addAgent(Agent agent);
+    TrackTile[][] getTrack();
+    boolean isAgentOutOfTrack(Agent agent);
+    boolean isAgentOnFinishLine(Agent agent);
+    TrackTile getTrackTileAt(int x, int y);
+    int getWidth();
+    int getHeight();
+    void addAgents(Agent[] agent);
+    ArrayList<Position> getStartingLine();
+    ArrayList<Position> getFinishLine();
 }

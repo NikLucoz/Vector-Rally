@@ -31,6 +31,10 @@ public interface TextUtils {
         System.out.println(color + text + Color.RESET);
     }
 
+    static void clearScreen() {
+        System.out.print("\033[H\033[2J");
+    }
+
     static void printGameLogo() {
         System.out.println(Color.RED + """
                 __/\\\\\\________/\\\\\\_____________________________________________________________________________________/\\\\\\\\\\\\\\\\\\_____________________/\\\\\\\\\\\\_____/\\\\\\\\\\\\__________________       \s

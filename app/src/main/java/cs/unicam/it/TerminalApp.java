@@ -13,12 +13,11 @@ package cs.unicam.it;
 
 import cs.unicam.it.api.controller.GameEngine;
 import cs.unicam.it.api.model.AgentManager;
+import cs.unicam.it.api.model.RaceConfigLoader;
 import cs.unicam.it.api.model.TrackManager;
-import cs.unicam.it.api.view.Color;
+import cs.unicam.it.api.model.interfaces.FileLoader;
 import cs.unicam.it.api.view.TextUserInterface;
-import cs.unicam.it.api.view.interfaces.TextUtils;
 import cs.unicam.it.api.view.interfaces.UserInterface;
-import java.net.URL;
 
 public class TerminalApp {
 
@@ -30,31 +29,19 @@ public class TerminalApp {
         try {
             UserInterface ui = new TextUserInterface();
 
-            String filePath = getFilePath();
+            RaceConfigLoader loader = new RaceConfigLoader();
+            String filePath = loader.getRaceConfigFilePath();
             TrackManager trackManager = new TrackManager(filePath);
             AgentManager agentManager = new AgentManager(filePath);
+
             GameEngine gameEngine = new GameEngine(trackManager.load(), agentManager.load(), ui);
 
             ui.setup();
-            //gameEngine.run();
+            gameEngine.run();
         } catch(Exception e) {
             e.printStackTrace();
         }
     }
 
-    private static String getFilePath() {
-        ClassLoader classLoader = TerminalApp.class.getClassLoader();
-        String path = "";
-        // Load the resource as a URL
-        URL resource = classLoader.getResource("raceConfig.txt");
 
-        if (resource != null) {
-            // Convert the URL to a file path
-            path = resource.getPath();
-            TextUtils.printCustomlnText("File loaded from path: " + path);
-        } else {
-            TextUtils.printCustomlnText("File not found!", Color.RED_BOLD);
-        }
-        return path;
-    }
 }

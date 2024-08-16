@@ -27,19 +27,4 @@ public record Vector(int x, int y) implements VelocityVector {
         return y;
     }
 
-    @Override
-    public int getRandomX() {
-        Random rand = new Random();
-        int min = x - 1;
-        int max = x + 1;
-        return rand.nextInt(max - min + 1) + min;
-    }
-
-    @Override
-    public int getRandomY() {
-        Random rand = new Random();
-        int min = y - 1;
-        int max = y + 1;
-        return rand.nextInt(max - min + 1) + min;
-    }
 }

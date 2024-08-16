@@ -13,7 +13,7 @@ package cs.unicam.it.api.model;
 
 public enum TrackTile {
     START('_'),
-    FINISH('_'),
+    FINISH('='),
     WALL('#'),
     ROAD('.');
 
