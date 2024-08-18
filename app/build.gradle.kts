@@ -16,7 +16,7 @@ repositories {
 }
 
 dependencies {
-
+    testImplementation(libs.junit.jupiter)
     implementation(project(":api"))
     // This dependency is used by the application.
     implementation(libs.guava)
@@ -31,7 +31,7 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass = "cs.unicam.it.TerminalApp"
+    mainClass = "cs.unicam.it.vectorrally.TerminalApp"
 }
 
 tasks.named<Test>("test") {
