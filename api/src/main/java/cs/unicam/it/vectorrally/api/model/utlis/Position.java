@@ -11,11 +11,37 @@
 
 package cs.unicam.it.vectorrally.api.model.utlis;
 
+/**
+ * Represents a position in a 2D space with x and y coordinates.
+ *
+ * @param x the x-coordinate of the position.
+ * @param y the y-coordinate of the position.
+ * @version 1.0
+ * @since 2024-08-15
+ * @author Niccolò Lucozzi
+ **/
 public record Position(int x, int y) {
 
+    /**
+     * Calculates the next position based on the given acceleration.
+     *
+     * @param acceleration the {@link Acceleration} to apply to the current position.
+     * @return a new {@link Position} representing the next position after applying the acceleration.
+     */
+    public Position getNextPosition(Acceleration acceleration) {
+        return new Position(
+                x + acceleration.x(),
+                y + acceleration.y()
+        );
+    }
+
+    /**
+     * Returns a string representation of the position, displaying the x and y coordinates.
+     *
+     * @return a string in the format "Position [x=x, y=y]".
+     */
     @Override
     public String toString() {
         return "Position [x=" + x + ", y=" + y + "]";
     }
-
 }

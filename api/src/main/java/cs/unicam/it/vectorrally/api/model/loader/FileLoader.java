@@ -16,7 +16,20 @@ import cs.unicam.it.vectorrally.api.view.TextUtils;
 
 import java.net.URL;
 
+/**
+ * This interface provide methods to load files
+ *
+ * @version 1.0
+ * @since 2024-08-15
+ * @author Niccolò Lucozzi
+ **/
 public interface FileLoader {
+
+    /**
+     * This method retrieves the file path of a file passed as input.
+     * @param fileName File name like "test.txt"
+     * @return The file path as a string.
+     */
     default String getFilePath(String fileName) {
         ClassLoader classLoader = FileLoader.class.getClassLoader();
         String path = "";

@@ -11,12 +11,9 @@
 
 package cs.unicam.it.vectorrally;
 
+import cs.unicam.it.vectorrally.api.controller.GameConfigurator;
 import cs.unicam.it.vectorrally.api.controller.GameEngine;
-import cs.unicam.it.vectorrally.api.model.loader.AgentManager;
-import cs.unicam.it.vectorrally.api.model.loader.RaceConfigLoader;
-import cs.unicam.it.vectorrally.api.model.loader.TrackManager;
 import cs.unicam.it.vectorrally.api.view.TextUserInterface;
-import cs.unicam.it.vectorrally.api.view.UserInterface;
 
 public class TerminalApp {
 
@@ -26,16 +23,10 @@ public class TerminalApp {
 
     public static void main(String[] args) {
         try {
-            UserInterface ui = new TextUserInterface();
+            TextUserInterface ui = new TextUserInterface();
+            GameConfigurator gameConfigurator = new GameConfigurator(ui);
 
-            RaceConfigLoader loader = new RaceConfigLoader();
-            String filePath = loader.getRaceConfigFilePath();
-            TrackManager trackManager = new TrackManager(filePath);
-            AgentManager agentManager = new AgentManager(filePath);
-
-            GameEngine gameEngine = new GameEngine(trackManager.load(), agentManager.load(), ui);
-
-            ui.setup();
+            GameEngine gameEngine = gameConfigurator.configure();
             gameEngine.run();
         } catch(Exception e) {
             e.printStackTrace();

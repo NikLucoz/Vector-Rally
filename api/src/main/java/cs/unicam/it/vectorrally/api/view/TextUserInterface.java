@@ -46,7 +46,6 @@ public class TextUserInterface implements UserInterface {
     }
 
     public void update(Agent[] agents, Track track) {
-        TextUtils.clearScreen();
         for (int i = 0; i < track.getHeight(); i++) {
             for (int j = 0; j < track.getWidth(); j++) {
                 boolean isAgentAtPos = false;
@@ -71,4 +70,5 @@ public class TextUserInterface implements UserInterface {
             TextUtils.printCustomlnText(""); // New line
         }
     }
+
 }

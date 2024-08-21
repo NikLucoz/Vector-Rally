@@ -10,53 +10,98 @@
  */
 
 package cs.unicam.it.vectorrally.api.model.utlis;
-
+/**
+ * Represents acceleration in a 2D space with x and y components. Implements the {@link Vector} interface.
+ *
+ * @version 1.0
+ * @since 2024-08-15
+ * @author Niccolò Lucozzi
+ **/
 public class Acceleration implements Vector {
     private int x;
     private int y;
 
+    /**
+     * Constructs an {@code Acceleration} object with the specified x and y components.
+     *
+     * @param x the x-component of the acceleration.
+     * @param y the y-component of the acceleration.
+     */
     public Acceleration(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
+    /**
+     * Retrieves the x-component of the acceleration.
+     *
+     * @return the x-component of the acceleration.
+     */
     @Override
     public int x() {
         return x;
     }
 
+    /**
+     * Retrieves the y-component of the acceleration.
+     *
+     * @return the y-component of the acceleration.
+     */
     @Override
     public int y() {
         return y;
     }
 
+    /**
+     * Sets the x-component of the acceleration.
+     *
+     * @param x the new x-component of the acceleration.
+     */
     public void setX(int x) {
         this.x = x;
     }
 
+    /**
+     * Sets the y-component of the acceleration.
+     *
+     * @param y the new y-component of the acceleration.
+     */
     public void setY(int y) {
         this.y = y;
     }
 
+    /**
+     * Determines the direction of the acceleration based on the x and y components.
+     *
+     * @return the {@link Direction} corresponding to the acceleration vector.
+     * @throws IllegalStateException if the direction cannot be determined.
+     */
     @Override
     public Direction getDirection() {
-        return switch (Integer.signum(x) + 3 * Integer.signum(y)) {
-            case 3 -> Direction.UP;
-            case 4 -> Direction.UP_RIGHT;
-            case -2 -> Direction.DOWN_RIGHT;
-            case -3 -> Direction.DOWN;
-            case -4 -> Direction.DOWN_LEFT;
+        int xSign = Integer.signum(x);
+        int ySign = Integer.signum(y);
+
+        // Determina la direzione basata sui segni di x e y
+        return switch (xSign * 10 + ySign) {
+            case 10 -> Direction.UP;
+            case 11 -> Direction.UP_RIGHT;
+            case 0 -> Direction.RIGHT;
+            case -10 -> Direction.DOWN;
+            case -11 -> Direction.DOWN_LEFT;
             case -1 -> Direction.LEFT;
-            case 2 -> Direction.UP_LEFT;
-            case 1 -> Direction.RIGHT;
-            case 0 -> Direction.MIDDLE;
-            default -> throw new IllegalStateException("Cannot get direction");
+            case 1 -> Direction.UP_LEFT;
+            case -9 -> Direction.DOWN_RIGHT;
+            default -> Direction.MIDDLE;  // Gestisce il caso in cui x == 0 e y == 0
         };
     }
 
+    /**
+     * Returns a string representation of the acceleration, displaying the x and y components.
+     *
+     * @return a string in the format "[x= x, y=y]".
+     */
     @Override
     public String toString() {
         return "[x= " + x + ", y=" + y + "]";
     }
-
 }

@@ -45,12 +45,12 @@ public abstract class Car implements Agent {
     @Override
     public void setPosition(Position position) {
         if (position == null) throw new IllegalArgumentException("Position cannot be null");
-
         this.position = position;
     }
 
     @Override
     public void setAcceleration(Acceleration acceleration) {
+        if (acceleration == null) throw new IllegalArgumentException("Acceleration cannot be null");
         this.acceleration = acceleration;
     }
 
@@ -65,7 +65,7 @@ public abstract class Car implements Agent {
     }
 
     @Override
-    public void nextMove(Track track) {
+    public void nextMove() {
     }
 
     @Override

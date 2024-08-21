@@ -13,6 +13,9 @@ package cs.unicam.it.vectorrally.api.model.loader;
 
 import cs.unicam.it.vectorrally.api.model.agent.Agent;
 import cs.unicam.it.vectorrally.api.model.agent.BotCar;
+import cs.unicam.it.vectorrally.api.model.strategies.MovementStrategy;
+import cs.unicam.it.vectorrally.api.model.strategies.SimpleMovementStrategy;
+import cs.unicam.it.vectorrally.api.model.strategies.Strategy;
 import cs.unicam.it.vectorrally.api.model.utlis.Position;
 
 import java.io.File;
@@ -21,9 +24,11 @@ import java.util.Scanner;
 
 public class AgentManager implements Manager<Agent[]> {
     private final String pathToFile;
+    private final MovementStrategy movementStrategy;
 
-    public AgentManager(String pathToFile) {
+    public AgentManager(String pathToFile, MovementStrategy movementStrategy) {
         this.pathToFile = pathToFile;
+        this.movementStrategy = movementStrategy;
     }
 
     public Agent[] load() {
@@ -31,24 +36,25 @@ public class AgentManager implements Manager<Agent[]> {
             File myFile = new File(this.pathToFile);
             Scanner myReader = new Scanner(myFile);
 
-            // First line (Players) - Second line (Bots)
-            int numPlayer = Integer.parseInt(myReader.nextLine());
+            // strategy type line
+            myReader.nextLine();
+            // line (Bots)
             int numBots = Integer.parseInt(myReader.nextLine());
 
-            Agent[] agents = new Agent[numPlayer + numBots];
+            Agent[] agents = new Agent[numBots];
 
             for (int i = 0; i < numBots; i++) {
-                agents[i] = new BotCar(i, new Position(0,0), Character.forDigit(i, 10));
+                agents[i] = new BotCar(
+                        i,
+                        new Position(0,0),
+                        Character.forDigit(i, 10)
+                );
+
+                agents[i].setMovementStrategy(this.movementStrategy);
             }
 
-//            for (int i = 0; i < numPlayer; i++) {
-//                agents[i + numBots] = new BotCar(i, new Position(0,0), Character.forDigit(i + numBots, 10));
-//            }
-
             myReader.close();
-
             return agents;
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

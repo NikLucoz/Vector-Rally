@@ -11,18 +11,89 @@
 
 package cs.unicam.it.vectorrally.api.model.agent;
 
+import cs.unicam.it.vectorrally.api.model.strategies.MovementStrategy;
+import cs.unicam.it.vectorrally.api.model.strategies.Strategy;
 import cs.unicam.it.vectorrally.api.model.utlis.Acceleration;
 import cs.unicam.it.vectorrally.api.model.utlis.Position;
 import cs.unicam.it.vectorrally.api.model.track.Track;
 
+/**
+ * Represents an agent moving on the map. This interface provides methods to manage
+ * the agent postion, acceleration, symbol ecc...
+ *
+ * @version 1.0
+ * @since 2024-08-15
+ * @author Niccolò Lucozzi
+ **/
 public interface Agent {
+
+    /**
+     * Retrieves the id associated to the agent
+     **/
     int getId();
+
+    /**
+     * Retrieves the current position of the agent.
+     *
+     * @return the current {@link Position} of the agent
+     **/
     Position getPosition();
+
+    /**
+     * Retrieves the current acceleration of the agent.
+     *
+     * @return the current {@link Acceleration} of the agent
+     **/
     Acceleration getAcceleration();
+
+    /**
+     * Sets a new acceleration.
+     *
+     * @param acceleration the new {@link Acceleration}
+     * @throws IllegalArgumentException if the new acceleration is null
+     **/
     void setAcceleration(Acceleration acceleration);
+
+    /**
+     * Sets a new position.
+     *
+     * @param position the new {@link Position}
+     * @throws IllegalArgumentException if the new position is null
+     **/
     void setPosition(Position position);
+
+    /**
+     * Sets a new strategy.
+     *
+     * @param movementStrategy the new {@link MovementStrategy}
+     * @throws IllegalArgumentException if the new movement strategy is null
+     **/
+    void setMovementStrategy(MovementStrategy movementStrategy);
+
+    /**
+     * Retrieves the symbol associated with the agent.
+     * The symbol is used to distinguish the agent on the map.
+     *
+     * @return the symbol associated with the agent.
+     **/
     char getSymbol();
-    void nextMove(Track track);
+
+    /**
+     * Ask the agent to make a move.
+     */
+    void nextMove();
+
+    /**
+     * Checks if the agent is still racing or if it is disqualified.
+     *
+     * @return the state of the agent
+     */
     boolean isInRace();
+
+    /**
+     * Sets the racing state of the agent.
+     *
+     * @param inRace the new racing state
+     */
     void setIsInRace(boolean inRace);
 }

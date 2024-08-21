@@ -12,7 +12,25 @@
 package cs.unicam.it.vectorrally.api.model.utlis;
 
 public interface Vector {
+    /**
+     * Retrieves the x-component of the vector.
+     *
+     * @return the x-component of the vector.
+     */
     int x();
+
+    /**
+     * Retrieves the y-component of the vector.
+     *
+     * @return the y-component of the vector.
+     */
     int y();
+
+    /**
+     * Retrieves the direction associated with the vector.
+     *
+     * @return the {@link Direction} of the vector.
+     */
     Direction getDirection();
 }
+

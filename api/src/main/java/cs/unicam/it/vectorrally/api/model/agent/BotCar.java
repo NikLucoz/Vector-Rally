@@ -12,18 +12,25 @@
 package cs.unicam.it.vectorrally.api.model.agent;
 
 import cs.unicam.it.vectorrally.api.model.utlis.Position;
-import cs.unicam.it.vectorrally.api.model.movement.MovementStrategy;
-import cs.unicam.it.vectorrally.api.model.movement.SimpleMovementStrategy;
+import cs.unicam.it.vectorrally.api.model.strategies.MovementStrategy;
+import cs.unicam.it.vectorrally.api.model.strategies.SimpleMovementStrategy;
 import cs.unicam.it.vectorrally.api.model.track.Track;
+import cs.unicam.it.vectorrally.api.view.TextUtils;
 
 public class BotCar extends Car {
+    private MovementStrategy movementStrategy;
 
     public BotCar(int id, Position position, char symbol) {
         super(id, position, symbol);
     }
 
-    public void nextMove(Track track) {
-        MovementStrategy ms = new SimpleMovementStrategy();
-        ms.nextMove(this, track);
+    @Override
+    public void setMovementStrategy(MovementStrategy movementStrategy) {
+        this.movementStrategy = movementStrategy;
+    }
+
+    public void nextMove() {
+        TextUtils.printCustomlnText("Bot" + id + "'s turn!");
+        movementStrategy.nextMove(this);
     }
 }

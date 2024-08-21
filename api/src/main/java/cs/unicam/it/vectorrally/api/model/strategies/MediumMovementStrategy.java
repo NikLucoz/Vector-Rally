@@ -9,15 +9,22 @@
  *
  */
 
-package cs.unicam.it.vectorrally.api.model.movement;
+package cs.unicam.it.vectorrally.api.model.strategies;
 
 import cs.unicam.it.vectorrally.api.model.agent.Agent;
 import cs.unicam.it.vectorrally.api.model.track.Track;
+import cs.unicam.it.vectorrally.api.model.utlis.Acceleration;
+import cs.unicam.it.vectorrally.api.model.utlis.Position;
 
 public class MediumMovementStrategy implements MovementStrategy {
+    private final Track track;
+
+    public MediumMovementStrategy(Track track) {
+        this.track = track;
+    }
 
     @Override
-    public void nextMove(Agent agent, Track track) {
+    public void nextMove(Agent agent) {
 
     }
 }

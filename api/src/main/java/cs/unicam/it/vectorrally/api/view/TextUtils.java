@@ -11,28 +11,66 @@
 
 package cs.unicam.it.vectorrally.api.view;
 
+import java.io.IOException;
+
+/**
+ * Provides utility methods for printing text with optional custom formatting and colors.
+ *
+ * <p>All methods in this interface are static and perform text output operations with optional color formatting using the {@link Color} class.</p>
+ *
+ * @version 1.0
+ * @since 2024-08-15
+ * @author Niccolò Lucozzi
+ **/
 public interface TextUtils {
 
+    /**
+     * Prints the specified text to the console without a newline.
+     *
+     * @param text the text to be printed.
+     */
     static void printCustomText(String text) {
         System.out.print(text);
     }
 
+    /**
+     * Prints the specified text to the console with the given color, without a newline.
+     *
+     * <p>The color is applied before the text and reset after the text.</p>
+     *
+     * @param text  the text to be printed.
+     * @param color the {@link Color} to be applied to the text.
+     */
     static void printCustomText(String text, Color color) {
         System.out.print(color + text + Color.RESET);
     }
 
+    /**
+     * Prints the specified text to the console followed by a newline.
+     *
+     * @param text the text to be printed.
+     */
     static void printCustomlnText(String text) {
         System.out.println(text);
     }
 
+    /**
+     * Prints the specified text to the console with the given color, followed by a newline.
+     *
+     * <p>The color is applied before the text and reset after the text.</p>
+     *
+     * @param text  the text to be printed.
+     * @param color the {@link Color} to be applied to the text.
+     */
     static void printCustomlnText(String text, Color color) {
         System.out.println(color + text + Color.RESET);
     }
 
-    static void clearScreen() {
-        System.out.print("\033[H\033[2J");
-    }
-
+    /**
+     * Prints a game logo to the console, formatted with color.
+     *
+     * <p>The logo is displayed with {@link Color#RED} and reset to default color after the logo.</p>
+     */
     static void printGameLogo() {
         System.out.println(Color.RED + """
                 __/\\\\\\________/\\\\\\_____________________________________________________________________________________/\\\\\\\\\\\\\\\\\\_____________________/\\\\\\\\\\\\_____/\\\\\\\\\\\\__________________       \s

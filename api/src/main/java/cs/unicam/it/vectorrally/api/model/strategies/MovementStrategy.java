@@ -9,11 +9,47 @@
  *
  */
 
-package cs.unicam.it.vectorrally.api.model.movement;
+package cs.unicam.it.vectorrally.api.model.strategies;
 
 import cs.unicam.it.vectorrally.api.model.agent.Agent;
 import cs.unicam.it.vectorrally.api.model.track.Track;
+import cs.unicam.it.vectorrally.api.model.utlis.Position;
 
+import java.util.Random;
+
+/**
+ * Defines a strategy for determining the next move of an agent in the game. Implementations of this interface
+ * use specific algorithms or rules to decide how an agent should move on the racetrack.
+ *
+ * @version 1.0
+ * @since 2024-08-15
+ * @author Niccolò Lucozzi
+ **/
 public interface MovementStrategy {
-    void nextMove(Agent agent, Track track);
+    /**
+     * Execute agent next move using agent and map data based on the strategy
+     * @param agent the {@link Agent} that needs to execute a move.
+     */
+    void nextMove(Agent agent);
+
+    /**
+     * Provides a random neighboring position relative to the agent's current position using the eight-neighbor rule.
+     *
+     * <p>The method selects a random offset from a predefined set of possible movements. This set includes
+     * cardinal directions (left, right, up, down) and diagonal directions (top-left, top-right, bottom-left,
+     * bottom-right), corresponding to the eight-neighbor rule.</p>
+     *
+     * @return a {@link Position} representing a random neighboring location relative to the current position.
+     */
+    default Position getRandomNeighbor() {
+        Random rand = new Random();
+        int[][] offsets = {
+                {0, 0}, {1, 0}, {-1, 0}, {0, 1}, {0, -1},
+                {1, 1}, {-1, -1}, {-1, 1}, {1, -1}
+        };
+
+        int idx = rand.nextInt(offsets.length);
+
+        return new Position(offsets[idx][0], offsets[idx][1]);
+    }
 }

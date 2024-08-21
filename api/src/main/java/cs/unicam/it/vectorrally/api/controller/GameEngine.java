@@ -17,12 +17,12 @@ import cs.unicam.it.vectorrally.api.view.Color;
 import cs.unicam.it.vectorrally.api.view.TextUtils;
 import cs.unicam.it.vectorrally.api.view.UserInterface;
 
-public class GameEngine {
+public class GameEngine implements Engine{
     private final Track track;
     private final Agent[] agents;
     private final UserInterface UI;
     private boolean playing = true;
-    private final int simulationTime = 3000;
+    private final int simulationTime = 5000;
 
     public GameEngine(Track track, Agent[] agents, UserInterface ui) {
         this.track = track;
@@ -47,20 +47,21 @@ public class GameEngine {
             updateActors();
             UI.update(agents, track);
             checkForWinner();
-            Thread.sleep(simulationTime);
         }
     }
 
-    private void updateActors() {
+    private void updateActors() throws InterruptedException {
         for (Agent agent : agents) {
             if (agent.isInRace()) {
-                agent.nextMove(track); // ask each player for a move
+                agent.nextMove(); // ask each actor for a move
 
                 // Check if agent is out of track and disqualify it if true
                 if (track.isAgentOutOfTrack(agent)) {
                     agent.setIsInRace(false);
                     TextUtils.printCustomlnText(agent.getSymbol() + " disqualified!");
                 }
+
+                Thread.sleep(simulationTime);
             }
         }
     }

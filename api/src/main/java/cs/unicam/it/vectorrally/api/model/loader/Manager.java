@@ -10,7 +10,18 @@
  */
 
 package cs.unicam.it.vectorrally.api.model.loader;
-
+/**
+ * Represents a manager, used to load configs, map and agents data.
+ *
+ * @version 1.0
+ * @since 2024-08-15
+ * @author Niccolò Lucozzi
+ **/
 public interface Manager<T> {
-    public T load();
+    /**
+     * This method loads specific types of objects depending on the type of manager.
+     * @return the objects with the manager loaded
+     */
+    T load();
+
 }

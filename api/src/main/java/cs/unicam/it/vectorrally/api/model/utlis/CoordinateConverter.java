@@ -11,27 +11,58 @@
 
 package cs.unicam.it.vectorrally.api.model.utlis;
 
+/**
+ * Provides utility methods for converting between map coordinates and agent coordinates.
+ *
+ * @version 1.0
+ * @since 2024-08-15
+ * @author Niccolò Lucozzi
+ **/
 public interface CoordinateConverter {
+
+    /**
+     * Converts map coordinates to agent coordinates.
+     *
+     * @param mapX the x-coordinate on the map.
+     * @param mapY the y-coordinate on the map.
+     * @return a {@link Position} representing the equivalent agent coordinates.
+     * */
     static Position mapToAgentPosition(int mapX, int mapY) {
         // Trasformazione delle coordinate della mappa in coordinate agenti
-        int agentX = mapY; // Mappa Y a X per gli agenti
-        int agentY = mapX; // Mappa X a Y per gli agenti
-
-        return new Position(agentX, agentY);
+        return agentToMapPosition(mapX, mapY);
     }
 
+    /**
+     * Converts agent coordinates to map coordinates.
+     *
+     * @param agentX the x-coordinate of the agent.
+     * @param agentY the y-coordinate of the agent.
+     * @return a {@link Position} representing the equivalent map coordinates.
+     */
     static Position agentToMapPosition(int agentX, int agentY) {
-        int mapX = agentY; // Converte Y dell'agente a X della mappa
-        int mapY = agentX; // Converte X dell'agente a Y della mappa
+        int mapX = agentY; // Convert agent Y to map X
+        int mapY = agentX; // Convert agent X to map Y
 
         return new Position(mapX, mapY);
     }
 
+    /**
+     * Converts agent coordinates to map coordinates using a {@link Position} object.
+     *
+     * @param agentPos the {@link Position} of the agent.
+     * @return a {@link Position} representing the equivalent map coordinates.
+     */
     static Position agentToMapPosition(Position agentPos) {
         return agentToMapPosition(agentPos.x(), agentPos.y());
     }
 
+    /**
+     * Converts map coordinates to agent coordinates using a {@link Position} object.
+     *
+     * @param mapPos the {@link Position} on the map.
+     * @return a {@link Position} representing the equivalent agent coordinates.
+     */
     static Position mapToAgentPosition(Position mapPos) {
-        return  mapToAgentPosition(mapPos.x(), mapPos.y());
+        return mapToAgentPosition(mapPos.x(), mapPos.y());
     }
 }

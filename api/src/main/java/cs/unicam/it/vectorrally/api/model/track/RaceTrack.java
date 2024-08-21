@@ -52,10 +52,9 @@ public class RaceTrack implements Track {
     public boolean isAgentOutOfTrack(Agent agent) {
         if (agent == null) throw new IllegalArgumentException("Agent is null");
 
-        Position agentPos = agent.getPosition();
+        Position agentPos = CoordinateConverter.agentToMapPosition(agent.getPosition());
         if (agentPos.y() < 0 || agentPos.y() >= width) return true;
         if (agentPos.x() < 0 || agentPos.x() >= height) return true;
-
         return track[agentPos.x()][agentPos.y()] == TrackTile.WALL;
     }
 
@@ -80,7 +79,7 @@ public class RaceTrack implements Track {
         for (int i = 0; i < agents.length; i++) {
             agents[i].setPosition(
                     new Position(
-                            CoordinateConverter.mapToAgentPosition(startingTiles.get(i)).x() + 3,
+                            CoordinateConverter.mapToAgentPosition(startingTiles.get(i)).x(),
                             CoordinateConverter.mapToAgentPosition(startingTiles.get(i)).y()
                     )
             );

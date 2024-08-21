@@ -9,22 +9,19 @@
  *
  */
 
-package cs.unicam.it.vectorrally.api.model.movement;
+package cs.unicam.it.vectorrally.api.model.strategies;
 
 import cs.unicam.it.vectorrally.api.model.agent.Agent;
 import cs.unicam.it.vectorrally.api.model.track.Track;
 import cs.unicam.it.vectorrally.api.model.utlis.Acceleration;
-import cs.unicam.it.vectorrally.api.model.utlis.Movement;
 import cs.unicam.it.vectorrally.api.model.utlis.Position;
 import cs.unicam.it.vectorrally.api.view.TextUtils;
 
-import java.util.Random;
-
 public class SimpleMovementStrategy implements MovementStrategy {
-    @Override
-    public void nextMove(Agent agent, Track track) {
-        Acceleration currentAcceleration = agent.getAcceleration();
 
+    @Override
+    public void nextMove(Agent agent) {
+        Acceleration currentAcceleration = agent.getAcceleration();
         Position randomNeighbor = getRandomNeighbor();
 
         Acceleration nextAcceleration = new Acceleration(
@@ -32,25 +29,15 @@ public class SimpleMovementStrategy implements MovementStrategy {
                 currentAcceleration.y() + randomNeighbor.y()
         );
 
-        Position nextPosition = Movement.getNextPosition(nextAcceleration, agent.getPosition());
+        Position agentPosition = agent.getPosition();
+        Position nextPosition = agentPosition.getNextPosition(nextAcceleration);
 
-        // aggiorna l'accelerazione del player
+        // aggiorna l'accelerazione dell'agent
         agent.setAcceleration(nextAcceleration);
-        // aggiorno la nuova posizione del player
+
+        // aggiorno la nuova posizione dell'agent
         agent.setPosition(nextPosition);
 
-        TextUtils.printCustomlnText("Agent " + agent.getId() + " moved " + currentAcceleration.getDirection().toString());
-
-        //TextUtils.printCustomlnText("Agent " + agent.getId() + " moved from " + agent.getPosition().toString() + " to " + nextPosition.toString() + " with acceleration " + nextAcceleration.toString());
-    }
-
-    private Position getRandomNeighbor() {
-        Random rand = new Random();
-        int min = -1;
-        int max = 1;
-        int x =  rand.nextInt(max - min + 1) + min;
-        int y =  rand.nextInt(max - min + 1) + min;
-
-        return new Position(x, y);
+        TextUtils.printCustomlnText("Agent " + agent.getId() + " moved to " + nextPosition.toString() + " with acceleration " + nextAcceleration.toString());
     }
 }
