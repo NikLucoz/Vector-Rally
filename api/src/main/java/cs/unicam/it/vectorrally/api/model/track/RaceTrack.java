@@ -57,6 +57,7 @@ public class RaceTrack implements Track {
 
     @Override
     public boolean isAgentOutOfTrack(Position pos) {
+        if(pos == null) throw new IllegalArgumentException("Agent is null");
         if (pos.y() < 0 || pos.y() >= height) return true;
         if (pos.x() < 0 || pos.x() >= width) return true;
         return track[pos.y()][pos.x()] == TrackTile.WALL;
@@ -90,6 +91,13 @@ public class RaceTrack implements Track {
         }
     }
 
+    /**
+     * Retrieves a list of all positions in the grid where the specified TrackTile is located.
+     *
+     * @param trackTile The TrackTile whose positions are to be found.
+     * @return An ArrayList of Position objects representing the coordinates of all occurrences
+     *         of the specified TrackTile within the grid.
+     */
     private ArrayList<Position> getAllTilesOfTrack(TrackTile trackTile) {
         ArrayList<Position> tiles = new ArrayList<>();
 
@@ -104,10 +112,12 @@ public class RaceTrack implements Track {
         return tiles;
     }
 
+    @Override
     public ArrayList<Position> getStartingLine() {
         return getAllTilesOfTrack(TrackTile.START);
     }
 
+    @Override
     public ArrayList<Position> getFinishLine() {
         return getAllTilesOfTrack(TrackTile.FINISH);
     }

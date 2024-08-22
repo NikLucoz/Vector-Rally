@@ -19,5 +19,8 @@ package cs.unicam.it.vectorrally.api.controller;
  * @author Niccolò Lucozzi
  **/
 public interface Configurator {
+    /**
+     *  Configure the game simulation before the start
+     */
     GameEngine configure();
 }

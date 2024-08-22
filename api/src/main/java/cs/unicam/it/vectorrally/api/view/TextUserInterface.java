@@ -35,8 +35,9 @@ public class TextUserInterface implements UserInterface {
     }
 
     @Override
-    public void showWinners() {
-
+    public void showWinner(Agent agent) {
+        TextUtils.printCustomlnText("The winner is Bot" + agent.getId() + "!", Color.RED_UNDERLINED);
+        TextUtils.printCustomText("Thanks for playing!", Color.RED);
     }
 
     @Override
@@ -49,6 +50,7 @@ public class TextUserInterface implements UserInterface {
         TextUtils.printCustomlnText("-----MENU-----");
     }
 
+    @Override
     public void update(Agent[] agents, Track track) {
         System.out.flush();
         for (int y = 0; y < track.getHeight(); y++) {

@@ -43,7 +43,7 @@ public interface UserInterface {
      * Displays information about the winners of the game. This method is called when the game has ended to
      * show the results to the user.
      */
-    void showWinners();
+    void showWinner(Agent agent);
 
     /**
      * Displays a message to the user. This could be used for notifications, alerts, or general communication.

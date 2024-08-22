@@ -21,7 +21,7 @@ package cs.unicam.it.vectorrally.api.controller;
 public interface Engine {
     /**
      *  Starts the game simulation
-     * @throws InterruptedException if the thread is interrupted
+     * @throws InterruptedException if the thread is interrupted during sleep
      */
     void run() throws InterruptedException;
 }

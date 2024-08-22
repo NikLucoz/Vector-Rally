@@ -22,7 +22,7 @@ public class GameEngine implements Engine{
     private final Agent[] agents;
     private final UserInterface UI;
     private boolean playing = true;
-    private final int simulationTime = 5000;
+    private final int simulationTime = 2000;
 
     public GameEngine(Track track, Agent[] agents, UserInterface ui) {
         this.track = track;
@@ -31,14 +31,26 @@ public class GameEngine implements Engine{
         setPlayersOnTrack();
     }
 
+    /**
+     * Places all the agents onto the track by calling the track.addAgents method.
+     * This method is called in the constructor to initialize the game state with the agents positioned correctly on the track.
+     */
     private void setPlayersOnTrack() {
         track.addAgents(agents);
     }
 
+    @Override
     public void run() throws InterruptedException {
         this.gameLoop();
     }
 
+    /**
+     * Runs the main game loop which updates the game state and checks for winners.
+     * It updates the UI, processes each agent's move, and checks if any agent has won or if all agents are disqualified.
+     * This loop continues running until a winner is found or all agents are disqualified.
+     *
+     * @throws InterruptedException if the thread is interrupted during sleep
+     */
     private void gameLoop() throws InterruptedException {
         UI.update(agents, track);
         Thread.sleep(simulationTime);
@@ -50,7 +62,11 @@ public class GameEngine implements Engine{
         }
     }
 
-    private void updateActors() throws InterruptedException {
+    /**
+     * Updates the state of each agent. Each agent's next move is determined and executed.
+     * Agents that move out of the track are disqualified.
+     */
+    private void updateActors() {
         for (Agent agent : agents) {
             if (agent.isInRace()) {
                 agent.nextMove(); // ask each actor for a move
@@ -60,42 +76,54 @@ public class GameEngine implements Engine{
                     agent.setIsInRace(false);
                     TextUtils.printCustomlnText(agent.getSymbol() + " disqualified!");
                 }
-
-                Thread.sleep(simulationTime);
             }
         }
     }
 
-    private boolean checkForWinner() {
+    /**
+     * Checks if there is a winner among the agents. If an agent is found to be on the finish line,
+     * the game ends, the winner is displayed, and the `playing` flag is set to false.
+     * If no agents are still in the race, the game ends with all agents disqualified.
+     */
+    private void checkForWinner() {
         // Check for winners, if true set playing to false
         // update playing value
-        if (checkIfAllDisqualified()) return false;
+        if (checkIfAllDisqualified()) return;
 
         for (Agent agent : agents) {
             if (!agent.isInRace()) continue;
             if (track.isAgentOnFinishLine(agent)) {
                 playing = false;
-                return true;
+                UI.showWinner(agent);
+                return;
             }
         }
 
-        return false;
     }
 
+    /**
+     * Checks if all agents have been disqualified from the race.
+     * This method iterates through all agents and verifies if they are still in the race.
+     * If no agents are still in the race, a message indicating that all cars are disqualified
+     * is displayed, and the `playing` flag is set to `false`.
+     *
+     * @return true if all agents are disqualified, false otherwise
+     */
     private boolean checkIfAllDisqualified() {
-        int agentsNumber = agents.length;
+        boolean allDisqualified = true;
+
         for (Agent agent : agents) {
-            if(!agent.isInRace()) {
-                agentsNumber--;
+            if (agent.isInRace()) {
+                allDisqualified = false;
+                break;
             }
         }
 
-        if(agentsNumber == 0) {
-            TextUtils.printCustomText("All cars are disqualified!", Color.RED_UNDERLINED);
+        if (allDisqualified) {
+            TextUtils.printCustomText("All agents are disqualified!", Color.RED_UNDERLINED);
             playing = false;
-            return true;
         }
 
-        return false;
+        return allDisqualified;
     }
 }

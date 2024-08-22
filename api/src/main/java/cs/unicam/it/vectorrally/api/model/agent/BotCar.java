@@ -29,6 +29,7 @@ public class BotCar extends Car {
         this.movementStrategy = movementStrategy;
     }
 
+    @Override
     public void nextMove() {
         TextUtils.printCustomlnText("Bot" + id + "'s turn!");
         movementStrategy.nextMove(this);
