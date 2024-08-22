@@ -33,13 +33,13 @@ public interface MovementStrategy {
     void nextMove(Agent agent);
 
     /**
-     * Provides a random neighboring position relative to the agent's current position using the eight-neighbor rule.
+     * Provides a random neighboring position relative to the agent's next position using the eight-neighbor rule.
      *
      * <p>The method selects a random offset from a predefined set of possible movements. This set includes
      * cardinal directions (left, right, up, down) and diagonal directions (top-left, top-right, bottom-left,
      * bottom-right), corresponding to the eight-neighbor rule.</p>
      *
-     * @return a {@link Position} representing a random neighboring location relative to the current position.
+     * @return a {@link Position} representing a random neighboring location relative to the next position.
      */
     default Position getRandomNeighbor() {
         Random rand = new Random();
@@ -51,5 +51,28 @@ public interface MovementStrategy {
         int idx = rand.nextInt(offsets.length);
 
         return new Position(offsets[idx][0], offsets[idx][1]);
+    }
+
+    /**
+     * Provides all the neighboring position relative to the agent's next position using the eight-neighbor rule.
+     *
+     * <p>The method iterates all the offsets from a predefined set of possible movements. This set includes
+     * cardinal directions (left, right, up, down) and diagonal directions (top-left, top-right, bottom-left,
+     * bottom-right), corresponding to the eight-neighbor rule.</p>
+     *
+     * @return a {@link Position[]} representing all neighboring location relative to the next position.
+     */
+    default Position[] getAllNeighbors(Position nextPosition) {
+        Position[] neighbors = new Position[9];
+        int[][] offsets = {
+                {0, 0}, {1, 0}, {-1, 0}, {0, 1}, {0, -1},
+                {1, 1}, {-1, -1}, {-1, 1}, {1, -1}
+        };
+
+        for (int i = 0; i < offsets.length; i++) {
+            neighbors[i] = new Position(nextPosition.x() + offsets[i][0], nextPosition.y() + offsets[i][1]);
+        }
+
+        return neighbors;
     }
 }

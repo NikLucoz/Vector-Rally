@@ -12,7 +12,6 @@
 package cs.unicam.it.vectorrally.api.model.strategies;
 
 import cs.unicam.it.vectorrally.api.model.agent.Agent;
-import cs.unicam.it.vectorrally.api.model.track.Track;
 import cs.unicam.it.vectorrally.api.model.utlis.Acceleration;
 import cs.unicam.it.vectorrally.api.model.utlis.Position;
 import cs.unicam.it.vectorrally.api.view.TextUtils;

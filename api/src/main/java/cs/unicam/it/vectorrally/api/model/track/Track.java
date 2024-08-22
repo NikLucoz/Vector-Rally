@@ -39,6 +39,8 @@ public interface Track {
      */
     boolean isAgentOutOfTrack(Agent agent);
 
+    boolean isAgentOutOfTrack(Position agentPos);
+
     /**
      * Checks if the specified agent is currently on the finish line.
      *

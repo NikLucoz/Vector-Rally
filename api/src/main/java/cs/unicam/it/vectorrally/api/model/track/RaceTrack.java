@@ -11,7 +11,6 @@
 
 package cs.unicam.it.vectorrally.api.model.track;
 
-import cs.unicam.it.vectorrally.api.model.utlis.CoordinateConverter;
 import cs.unicam.it.vectorrally.api.model.utlis.Position;
 import cs.unicam.it.vectorrally.api.model.agent.Agent;
 
@@ -25,8 +24,8 @@ public class RaceTrack implements Track {
     public RaceTrack(TrackTile[][] track) {
         if (track == null || track.length == 0 || track[0].length == 0) throw new IllegalArgumentException("Invalid track");
         this.track = track;
-        this.width = track[0].length;
         this.height = track.length;
+        this.width = track[0].length;
     }
 
     public TrackTile[][] getTrack() {
@@ -35,7 +34,8 @@ public class RaceTrack implements Track {
 
     @Override
     public TrackTile getTrackTileAt(int x, int y) {
-        return track[x][y];
+        if(x < 0 || y < 0 || y > height || x > width) throw new IllegalArgumentException("Invalid position");
+        return track[y][x];
     }
 
     @Override
@@ -52,10 +52,14 @@ public class RaceTrack implements Track {
     public boolean isAgentOutOfTrack(Agent agent) {
         if (agent == null) throw new IllegalArgumentException("Agent is null");
 
-        Position agentPos = CoordinateConverter.agentToMapPosition(agent.getPosition());
-        if (agentPos.y() < 0 || agentPos.y() >= width) return true;
-        if (agentPos.x() < 0 || agentPos.x() >= height) return true;
-        return track[agentPos.x()][agentPos.y()] == TrackTile.WALL;
+        return isAgentOutOfTrack(agent.getPosition());
+    }
+
+    @Override
+    public boolean isAgentOutOfTrack(Position pos) {
+        if (pos.y() < 0 || pos.y() >= height) return true;
+        if (pos.x() < 0 || pos.x() >= width) return true;
+        return track[pos.y()][pos.x()] == TrackTile.WALL;
     }
 
     public boolean isAgentOnFinishLine(Agent agent) {
@@ -79,8 +83,8 @@ public class RaceTrack implements Track {
         for (int i = 0; i < agents.length; i++) {
             agents[i].setPosition(
                     new Position(
-                            CoordinateConverter.mapToAgentPosition(startingTiles.get(i)).x(),
-                            CoordinateConverter.mapToAgentPosition(startingTiles.get(i)).y()
+                            startingTiles.get(i).x(),
+                            startingTiles.get(i).y()
                     )
             );
         }
@@ -89,9 +93,9 @@ public class RaceTrack implements Track {
     private ArrayList<Position> getAllTilesOfTrack(TrackTile trackTile) {
         ArrayList<Position> tiles = new ArrayList<>();
 
-        for (int x = 0; x < height; x++) {
-            for (int y = 0; y < width; y++) {
-                if (track[x][y] == trackTile) {
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                if (track[y][x] == trackTile) {
                     tiles.add(new Position(x, y));
                 }
             }

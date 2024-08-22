@@ -13,8 +13,6 @@ package cs.unicam.it.vectorrally.api.view;
 
 import cs.unicam.it.vectorrally.api.model.agent.Agent;
 import cs.unicam.it.vectorrally.api.model.track.Track;
-import cs.unicam.it.vectorrally.api.model.utlis.CoordinateConverter;
-import cs.unicam.it.vectorrally.api.model.utlis.Position;
 
 import java.util.Scanner;
 
@@ -26,8 +24,14 @@ public class TextUserInterface implements UserInterface {
     }
 
     public void setup() {
-        //TODO: implement later
         TextUtils.printGameLogo();
+        TextUtils.printCustomlnText("Welcome to Vector Rally v1.0", Color.RED_UNDERLINED);
+        TextUtils.printCustomText("Are you ready to start? (y/n): ", Color.YELLOW_UNDERLINED);
+
+        String input = scanner.nextLine();
+        if (!input.equalsIgnoreCase("y")) {
+            System.exit(0);
+        }
     }
 
     @Override
@@ -46,15 +50,15 @@ public class TextUserInterface implements UserInterface {
     }
 
     public void update(Agent[] agents, Track track) {
-        for (int i = 0; i < track.getHeight(); i++) {
-            for (int j = 0; j < track.getWidth(); j++) {
+        System.out.flush();
+        for (int y = 0; y < track.getHeight(); y++) {
+            for (int x = 0; x < track.getWidth(); x++) {
                 boolean isAgentAtPos = false;
 
-                Position mapPos = CoordinateConverter.mapToAgentPosition(i, j);
                 // Controlla se c'è un agente in questa posizione
                 for (Agent agent : agents) {
                     if (!agent.isInRace()) continue;
-                    if (agent.getPosition().x() == mapPos.x() && agent.getPosition().y() == mapPos.y()) {
+                    if (agent.getPosition().x() == x && agent.getPosition().y() == y) {
                         // Stampa il simbolo dell'agente
                         TextUtils.printCustomText(String.valueOf(agent.getSymbol()));
                         isAgentAtPos = true;
@@ -63,7 +67,7 @@ public class TextUserInterface implements UserInterface {
                 }
 
                 if (!isAgentAtPos) {
-                    TextUtils.printCustomText(String.valueOf(track.getTrackTileAt(i, j).getSymbol()));
+                    TextUtils.printCustomText(String.valueOf(track.getTrackTileAt(x, y).getSymbol()));
                 }
             }
 

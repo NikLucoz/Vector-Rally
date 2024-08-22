@@ -12,3 +12,4 @@ plugins {
 
 rootProject.name = "Vector-Rally"
 include("app", "api")
+
