@@ -12,25 +12,42 @@
 package cs.unicam.it.vectorrally.api.model.strategies;
 
 public enum Strategy {
-    SIMPLE(0),
-    MEDIUM(1);
+    SIMPLE(0);
 
     private final int value;
 
-    private Strategy(int value) {
+    Strategy(int value) {
         this.value = value;
     }
 
+    /**
+     * Returns the Strategy value
+     * @return the value associated to the strategy
+     */
     public int getValue() {
         return value;
     }
 
+    /**
+     * Returns the {@link Strategy} corresponding to the specified integer value.
+     * <p>
+     * This method iterates through all the available {@link Strategy} enum values
+     * and returns the one that matches the provided integer value. If no matching
+     * strategy is found, an {@link IllegalArgumentException} is thrown.
+     * </p>
+     *
+     * @param value the integer value representing a specific {@link Strategy}
+     * @return the {@link Strategy} corresponding to the specified value
+     * @throws IllegalArgumentException if no {@link Strategy} with the specified
+     * value exists
+     */
     public static Strategy fromValue(int value) {
-        return switch (value) {
-            case 0 -> SIMPLE;
-            case 1 -> MEDIUM;
-            default -> throw new IllegalArgumentException("Invalid value: " + value);
-        };
+        for (Strategy strategy : Strategy.values()) {
+            if (strategy.getValue() == value) {
+                return strategy;
+            }
+        }
+        throw new IllegalArgumentException("Invalid value: " + value);
     }
 
 }

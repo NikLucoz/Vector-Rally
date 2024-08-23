@@ -45,16 +45,4 @@ public interface UserInterface {
      */
     void showWinner(Agent agent);
 
-    /**
-     * Displays a message to the user. This could be used for notifications, alerts, or general communication.
-     *
-     * @param message the message to be displayed to the user.
-     */
-    void showMessage(String message);
-
-    /**
-     * Displays the main menu of the user interface, allowing the user to navigate to different sections or options
-     * of the game.
-     */
-    void showMenu();
 }

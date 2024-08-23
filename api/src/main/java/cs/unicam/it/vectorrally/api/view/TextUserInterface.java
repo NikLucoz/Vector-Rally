@@ -25,8 +25,8 @@ public class TextUserInterface implements UserInterface {
 
     public void setup() {
         TextUtils.printGameLogo();
-        TextUtils.printCustomlnText("Welcome to Vector Rally v1.0", Color.RED_UNDERLINED);
-        TextUtils.printCustomText("Are you ready to start? (y/n): ", Color.YELLOW_UNDERLINED);
+        TextUtils.printCustomlnText("Welcome to Vector Rally v1.0", Color.RED);
+        TextUtils.printCustomText("Are you ready to start? (y/n): ", Color.BLUE);
 
         String input = scanner.nextLine();
         if (!input.equalsIgnoreCase("y")) {
@@ -41,30 +41,20 @@ public class TextUserInterface implements UserInterface {
     }
 
     @Override
-    public void showMessage(String message) {
-
-    }
-
-    @Override
-    public void showMenu() {
-        TextUtils.printCustomlnText("-----MENU-----");
-    }
-
-    @Override
     public void update(Agent[] agents, Track track) {
         System.out.flush();
         for (int y = 0; y < track.getHeight(); y++) {
             for (int x = 0; x < track.getWidth(); x++) {
                 boolean isAgentAtPos = false;
 
-                // Controlla se c'è un agente in questa posizione
+                // Check if an agent is at this position
                 for (Agent agent : agents) {
                     if (!agent.isInRace()) continue;
                     if (agent.getPosition().x() == x && agent.getPosition().y() == y) {
-                        // Stampa il simbolo dell'agente
-                        TextUtils.printCustomText(String.valueOf(agent.getSymbol()));
+                        // Print the Agent symbol on the track
+                        TextUtils.printCustomText(String.valueOf(agent.getSymbol()), Color.BLUE);
                         isAgentAtPos = true;
-                        break; // Esce dal ciclo degli agenti
+                        break;
                     }
                 }
 
@@ -72,8 +62,8 @@ public class TextUserInterface implements UserInterface {
                     TextUtils.printCustomText(String.valueOf(track.getTrackTileAt(x, y).getSymbol()));
                 }
             }
-
-            TextUtils.printCustomlnText(""); // New line
+            // New line
+            TextUtils.printCustomlnText("");
         }
     }
 

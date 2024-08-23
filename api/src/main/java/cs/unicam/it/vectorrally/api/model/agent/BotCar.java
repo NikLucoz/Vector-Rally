@@ -13,8 +13,6 @@ package cs.unicam.it.vectorrally.api.model.agent;
 
 import cs.unicam.it.vectorrally.api.model.utlis.Position;
 import cs.unicam.it.vectorrally.api.model.strategies.MovementStrategy;
-import cs.unicam.it.vectorrally.api.model.strategies.SimpleMovementStrategy;
-import cs.unicam.it.vectorrally.api.model.track.Track;
 import cs.unicam.it.vectorrally.api.view.TextUtils;
 
 public class BotCar extends Car {

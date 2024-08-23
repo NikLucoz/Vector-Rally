@@ -13,8 +13,6 @@ package cs.unicam.it.vectorrally.api.model.strategies;
 
 import cs.unicam.it.vectorrally.api.model.agent.Agent;
 import cs.unicam.it.vectorrally.api.model.track.Track;
-import cs.unicam.it.vectorrally.api.model.utlis.Acceleration;
-import cs.unicam.it.vectorrally.api.model.utlis.Position;
 
 public class MediumMovementStrategy implements MovementStrategy {
     private final Track track;
@@ -25,9 +23,7 @@ public class MediumMovementStrategy implements MovementStrategy {
 
     @Override
     public void nextMove(Agent agent) {
-        Acceleration currentAcceleration = agent.getAcceleration();
-        Position agentPosition = agent.getPosition();
-        Position nextPosition = agentPosition.getNextPosition(currentAcceleration);
+        // TODO: Implement
     }
 
 }

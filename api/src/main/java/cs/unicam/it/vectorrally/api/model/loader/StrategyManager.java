@@ -11,26 +11,27 @@
 
 package cs.unicam.it.vectorrally.api.model.loader;
 
-import cs.unicam.it.vectorrally.api.model.agent.Agent;
-import cs.unicam.it.vectorrally.api.model.strategies.MediumMovementStrategy;
-import cs.unicam.it.vectorrally.api.model.strategies.MovementStrategy;
-import cs.unicam.it.vectorrally.api.model.strategies.SimpleMovementStrategy;
-import cs.unicam.it.vectorrally.api.model.strategies.Strategy;
+import cs.unicam.it.vectorrally.api.model.strategies.*;
 import cs.unicam.it.vectorrally.api.model.track.Track;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class StrategyManager implements Manager<MovementStrategy> {
 
     private final Track track;
     private final String pathToFile;
-
+    private final Map<Strategy, MovementStrategyFactory> strategyFactories;
 
     public StrategyManager(String pathToFile, Track track) {
         this.pathToFile = pathToFile;
         this.track = track;
+
+        this.strategyFactories = new HashMap<>();
+        this.strategyFactories.put(Strategy.SIMPLE, SimpleMovementStrategy::new);
     }
 
     @Override
@@ -38,15 +39,11 @@ public class StrategyManager implements Manager<MovementStrategy> {
         try {
             File myFile = new File(this.pathToFile);
             Scanner myReader = new Scanner(myFile);
-            MovementStrategy movementStrategy = null;
 
             // Skip Agent lines
             Strategy strategy = Strategy.fromValue(myReader.nextInt());
 
-            switch (strategy) {
-                case SIMPLE -> movementStrategy = new SimpleMovementStrategy();
-                case MEDIUM -> movementStrategy = new MediumMovementStrategy(track);
-            }
+            MovementStrategy movementStrategy = strategyFactories.get(strategy).create();
 
             return movementStrategy;
         } catch (FileNotFoundException e) {

@@ -22,7 +22,7 @@ public class GameEngine implements Engine{
     private final Agent[] agents;
     private final UserInterface UI;
     private boolean playing = true;
-    private final int simulationTime = 2000;
+    private final int simulationTime = 3000;
 
     public GameEngine(Track track, Agent[] agents, UserInterface ui) {
         this.track = track;
@@ -58,6 +58,7 @@ public class GameEngine implements Engine{
         while(playing) {
             updateActors();
             UI.update(agents, track);
+            Thread.sleep(simulationTime);
             checkForWinner();
         }
     }
@@ -74,7 +75,7 @@ public class GameEngine implements Engine{
                 // Check if agent is out of track and disqualify it if true
                 if (track.isAgentOutOfTrack(agent)) {
                     agent.setIsInRace(false);
-                    TextUtils.printCustomlnText(agent.getSymbol() + " disqualified!");
+                    TextUtils.printCustomlnText(agent.getSymbol() + " disqualified!", Color.RED_UNDERLINED);
                 }
             }
         }

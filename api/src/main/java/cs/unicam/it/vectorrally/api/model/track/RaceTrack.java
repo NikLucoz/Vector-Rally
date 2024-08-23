@@ -15,6 +15,7 @@ import cs.unicam.it.vectorrally.api.model.utlis.Position;
 import cs.unicam.it.vectorrally.api.model.agent.Agent;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class RaceTrack implements Track {
     private final TrackTile[][] track;
@@ -76,18 +77,21 @@ public class RaceTrack implements Track {
     @Override
     public void addAgents(Agent[] agents) {
         if (agents == null || agents.length == 0) throw new IllegalArgumentException("No agents passed");
+        Random rand = new Random();
 
         ArrayList<Position> startingTiles = getStartingLine();
         if (startingTiles.isEmpty()) return;
         if (startingTiles.size() < agents.length) throw new IllegalArgumentException("Invalid number of agents, too much for the starting line");
 
         for (int i = 0; i < agents.length; i++) {
+            int startPosIdx = rand.nextInt(startingTiles.size());
             agents[i].setPosition(
                     new Position(
-                            startingTiles.get(i).x(),
-                            startingTiles.get(i).y()
+                            startingTiles.get(startPosIdx).x(),
+                            startingTiles.get(startPosIdx).y()
                     )
             );
+            startingTiles.remove(startPosIdx);
         }
     }
 
