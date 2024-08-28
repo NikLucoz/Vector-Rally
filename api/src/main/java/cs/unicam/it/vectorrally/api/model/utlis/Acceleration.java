@@ -71,31 +71,6 @@ public class Acceleration implements Vector {
     }
 
     /**
-     * Determines the direction of the acceleration based on the x and y components.
-     *
-     * @return the {@link Direction} corresponding to the acceleration vector.
-     * @throws IllegalStateException if the direction cannot be determined.
-     */
-    @Override
-    public Direction getDirection() {
-        int xSign = Integer.signum(x);
-        int ySign = Integer.signum(y);
-
-        // Determina la direzione basata sui segni di x e y
-        return switch (xSign * 10 + ySign) {
-            case 10 -> Direction.UP;
-            case 11 -> Direction.UP_RIGHT;
-            case 0 -> Direction.RIGHT;
-            case -10 -> Direction.DOWN;
-            case -11 -> Direction.DOWN_LEFT;
-            case -1 -> Direction.LEFT;
-            case 1 -> Direction.UP_LEFT;
-            case -9 -> Direction.DOWN_RIGHT;
-            default -> Direction.MIDDLE;  // Gestisce il caso in cui x == 0 e y == 0
-        };
-    }
-
-    /**
      * Returns a string representation of the acceleration, displaying the x and y components.
      *
      * @return a string in the format "[x= x, y=y]".

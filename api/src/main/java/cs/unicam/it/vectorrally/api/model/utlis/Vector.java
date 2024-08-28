@@ -25,12 +25,5 @@ public interface Vector {
      * @return the y-component of the vector.
      */
     int y();
-
-    /**
-     * Retrieves the direction associated with the vector.
-     *
-     * @return the {@link Direction} of the vector.
-     */
-    Direction getDirection();
 }
 

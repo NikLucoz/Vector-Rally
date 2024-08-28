@@ -16,11 +16,6 @@ import cs.unicam.it.vectorrally.api.controller.GameEngine;
 import cs.unicam.it.vectorrally.api.view.TextUserInterface;
 
 public class TerminalApp {
-
-    public boolean test() {
-        return true;
-    }
-
     public static void main(String[] args) {
         try {
             TextUserInterface ui = new TextUserInterface();
@@ -32,6 +27,4 @@ public class TerminalApp {
             e.printStackTrace();
         }
     }
-
-
 }

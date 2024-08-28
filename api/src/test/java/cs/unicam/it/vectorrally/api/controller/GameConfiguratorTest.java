@@ -11,34 +11,28 @@
 
 package cs.unicam.it.vectorrally.api.controller;
 
+import cs.unicam.it.vectorrally.api.model.agent.Agent;
+import cs.unicam.it.vectorrally.api.model.agent.BotCar;
 import cs.unicam.it.vectorrally.api.model.loader.AgentManager;
 import cs.unicam.it.vectorrally.api.model.loader.RaceConfigLoader;
 import cs.unicam.it.vectorrally.api.model.loader.StrategyManager;
 import cs.unicam.it.vectorrally.api.model.loader.TrackManager;
+import cs.unicam.it.vectorrally.api.model.strategies.SimpleMovementStrategy;
+import cs.unicam.it.vectorrally.api.model.track.RaceTrack;
 import cs.unicam.it.vectorrally.api.model.track.Track;
-import cs.unicam.it.vectorrally.api.view.UserInterface;
+import cs.unicam.it.vectorrally.api.model.track.TrackTile;
+import cs.unicam.it.vectorrally.api.model.utlis.Position;
+import cs.unicam.it.vectorrally.api.view.TextUserInterface;
+import org.junit.jupiter.api.Test;
 
-public class GameConfigurator implements Configurator {
+import static org.junit.jupiter.api.Assertions.*;
 
-    private final UserInterface ui;
-
-    public GameConfigurator(UserInterface userInterface) {
-        this.ui = userInterface;
-    }
-
-    @Override
-    public GameEngine configure() {
-        RaceConfigLoader loader = new RaceConfigLoader();
-        String filePath = loader.getRaceConfigFilePath();
-
-        TrackManager trackManager = new TrackManager(filePath);
-        Track track = trackManager.load();
-
-        StrategyManager strategyManager = new StrategyManager(filePath, track);
-        AgentManager agentManager = new AgentManager(filePath, strategyManager.load());
-
-        GameEngine gameEngine = new GameEngine(track, agentManager.load(), ui);
-
-        return gameEngine;
+class GameConfiguratorTest {
+    @Test
+    void testGameConfigurator() {
+        TextUserInterface ui = new TextUserInterface();
+        GameConfigurator configurator = new GameConfigurator(ui);
+        GameEngine gm = configurator.configure();
+        assertNotNull(gm);
     }
 }

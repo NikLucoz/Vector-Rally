@@ -17,7 +17,7 @@ import cs.unicam.it.vectorrally.api.view.Color;
 import cs.unicam.it.vectorrally.api.view.TextUtils;
 import cs.unicam.it.vectorrally.api.view.UserInterface;
 
-public class GameEngine implements Engine{
+public class GameEngine implements Engine {
     private final Track track;
     private final Agent[] agents;
     private final UserInterface UI;

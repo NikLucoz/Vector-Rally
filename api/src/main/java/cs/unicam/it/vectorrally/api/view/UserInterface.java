@@ -44,5 +44,4 @@ public interface UserInterface {
      * show the results to the user.
      */
     void showWinner(Agent agent);
-
 }

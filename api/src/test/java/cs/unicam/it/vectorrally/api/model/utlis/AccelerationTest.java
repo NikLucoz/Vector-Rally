@@ -11,14 +11,31 @@
 
 package cs.unicam.it.vectorrally.api.model.utlis;
 
-public enum Direction {
-    MIDDLE,
-    UP,
-    DOWN,
-    LEFT,
-    RIGHT,
-    UP_RIGHT,
-    UP_LEFT,
-    DOWN_RIGHT,
-    DOWN_LEFT;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class AccelerationTest {
+    @Test
+    public void testConstructorAndGetters() {
+        Acceleration acceleration = new Acceleration(5, -3);
+        assertEquals(5, acceleration.x());
+        assertEquals(-3, acceleration.y());
+    }
+
+    @Test
+    public void testSetters() {
+        Acceleration acceleration = new Acceleration(0, 0);
+        acceleration.setX(7);
+        acceleration.setY(-2);
+        assertEquals(7, acceleration.x());
+        assertEquals(-2, acceleration.y());
+    }
+
+    @Test
+    public void testToString() {
+        Acceleration acceleration = new Acceleration(3, 4);
+        assertEquals("[x= 3, y=4]", acceleration.toString());
+    }
+
 }
